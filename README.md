@@ -16,7 +16,8 @@ If this plugin is installed and enabled, by default all .html, .hb, .handelbars,
 
 All of the mustache templates will have the data from the anvil build.json file passed into them.  For example:
 
-```{
+```javascript
+{
 	"anvil.mustache": {
 		"data": {
 			"hello": "Hello World!"
@@ -27,12 +28,14 @@ All of the mustache templates will have the data from the anvil build.json file 
 
 when paired with a template like this:
 
-```<div class="my-div">{{hello}}</div>
+```html
+<div class="my-div">{{hello}}</div>
 ```
 
 would render this after an anvil build:
 
-```<div class="my-div">Hello World</div>
+```html
+<div class="my-div">Hello World</div>
 ```
 
 ### Rendering Partials
@@ -41,7 +44,8 @@ The magic of this plugin is that it can take external partial templates and rend
 
 For example, with a build.json file like this:
 
-```{
+```javascript
+{
 	"anvil.mustache": {
 		"data": {
 			"partials": {
@@ -57,12 +61,14 @@ For example, with a build.json file like this:
 
 and a partials/header.html file like this:
 
-```<h1>{{name}}</h1>
+```html
+<h1>{{name}}</h1>
 ```
 
 and an index.html file like this:
 
-```{{#dataForHeader}}
+```html
+{{#dataForHeader}}
 	{{> header}}
 {{/dataForHeader}}
 <h2>This is the index.html page!</h2>
@@ -70,7 +76,8 @@ and an index.html file like this:
 
 The index.html page would be built to look like this:
 
-```<h1>My Awesome Header</h1>
+```html
+<h1>My Awesome Header</h1>
 <h2>This is the index.html page!</h2>
 ```
 
@@ -80,7 +87,8 @@ Again, partials are standard Mustache partials, so everything in the partial is 
 
 By default, anvil.mustache works for .html, .hb, .handelbars, .mustache and .md files.  You can also pass in an array of the file types you would like to be mustached in you project like this:
 
-```{
+```javascript
+{
 	"anvil.mustache": {
 		"formats": ["foo", "bar", "html"]
 	}
