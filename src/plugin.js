@@ -37,6 +37,15 @@ var pluginFactory = function( _, anvil ) {
 
         },
 
+        // Makes the file have an html extension
+        makeHtml: function (name) {
+            _.each(this.config.formats, function (format) {
+                name = name.replace("." + format, ".html");
+            });
+            name = name.replace('.anvil/tmp', anvil.config.output || 'lib');
+            return name;
+        },
+
         // Compiles individual files
         compileFile: function (file) {
 
@@ -58,10 +67,14 @@ var pluginFactory = function( _, anvil ) {
                     file.template = mustache.render(html, self.config.data, self.config.data.partials);
 
                     // Re-write the temp file
-                    anvil.fs.write(file.workingFile, file.template, function () {
+                    if (file.workingFile.indexOf('.html') !== -1) {
+                        anvil.fs.write(file.workingFile, file.template, function () {
+                        });
+                    }
+                    anvil.fs.write(self.makeHtml(file.workingFile), file.template, function () {
 
                         // Report the compilation to the command line
-                        console.log("        mustached " + (file.relativePath + '/' + file.name).replace('//', '/'));
+                        console.log("        mustached " + (file.relativePath + '/' + self.makeHtml(file.name)).replace('//', '/'));
 
                     });
 
